@@ -1,4 +1,4 @@
-package com.aimsio
+package io.github.aimsio.tableview
 
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +50,7 @@ class TableViewManager constructor(
 
     private fun createOneColumnOfData(
         parent: ViewGroup,
-        column:ColumnCell,
+        column: ColumnCell,
         columnValues: List<TableCell>
     ): View {
 

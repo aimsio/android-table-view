@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
+import io.github.aimsio.tableview.TableCell
+import io.github.aimsio.tableview.TableViewManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,7 +28,12 @@ class MainActivity : AppCompatActivity() {
         columns.forEach { columnTitleCell ->
             rows.forEach { row ->
                 val cells = mutableListOf<TableCell>()
-                cells.add(mapPersonFieldsToTableCell(columnName = columnTitleCell.getColumnTitle(), person = row))
+                cells.add(
+                    mapPersonFieldsToTableCell(
+                        columnName = columnTitleCell.getColumnTitle(),
+                        person = row
+                    )
+                )
                 tableCells.add(cells)
             }
         }
@@ -34,7 +41,10 @@ class MainActivity : AppCompatActivity() {
         TableViewManager(columns, tableCells).showTable(table_container)
     }
 
-    private fun mapPersonFieldsToTableCell(columnName: String, person: Person): TableCell {
+    private fun mapPersonFieldsToTableCell(
+        columnName: String,
+        person: Person
+    ): TableCell {
 
         return when (columnName) {
             "First Name" -> SimpleTextCell(columnTitle = columnName, value = person.firstName)
@@ -50,7 +60,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class ColumnHeaderCell(private val columnTitle: String) : ColumnCell {
+    class ColumnHeaderCell(private val columnTitle: String) :
+        io.github.aimsio.tableview.ColumnCell {
 
         override fun getColumnTitle(): String = columnTitle
 
