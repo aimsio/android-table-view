@@ -26,11 +26,35 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
+
+ext
+        {
+            bintrayRepo = 'maven'
+            bintrayName = 'tableview'
+            orgName = 'farhad'
+
+            publishedGroupId = 'io.github.aimsio'
+            artifact = 'tableview'
+            libraryVersion = '1.0.0'
+
+            libraryName = 'tableview'
+            libraryDescription = 'custom tableview layout for android'
+
+            siteUrl = 'https://github.com/aimsio/android-table-view.git'
+            gitUrl = 'https://github.com/aimsio/android-table-view.git'
+
+            developerId = 'farhad'
+            developerName = 'Farhad Faghihi'
+            developerEmail = 'ifarhadfaghihi@gmail.com'
+
+            licenseName = 'GNU General Public License v3.0'
+            licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            allLicenses = ["GPL-3.0"]
+        }
+
+
+apply from: rootProject.file('gradle/install.gradle')
+apply from: rootProject.file('gradle/bintray-android.gradle')
