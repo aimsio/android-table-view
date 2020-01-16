@@ -6,29 +6,30 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 
-
-interface ITableCell
-interface TableCell : ITableCell {
-    fun createCellView(parent: ViewGroup): View
-    fun getCellColumnTitle(): String
-}
-interface ColumnCell : ITableCell {
-    fun createColumnHeaderView(parent: ViewGroup): View
-    fun getColumnTitle(): String
-}
-
-class TableViewManager constructor(
-    private val columnHeaderCells: List<ColumnCell>,
-    private val tableDataCells: List<List<TableCell>>
+class TableViewManager<in T> constructor(
+    private val columnHeaders: List<ColumnCell>,
+    private val dataRows: List<T>,
+    private val rowFieldsToTableCellMapper: (t: T, columnName : ColumnCell) -> TableCell
 ) {
 
     fun showTable(parent: ViewGroup) {
-        columnHeaderCells.forEach { columnCell ->
+
+        val tableCells = mutableListOf<List<TableCell>>()
+
+        columnHeaders.forEach { columnTitleCell ->
+            dataRows.forEach { row ->
+                val cells = mutableListOf<TableCell>()
+                cells.add(rowFieldsToTableCellMapper(row, columnTitleCell))
+                tableCells.add(cells)
+            }
+        }
+
+        columnHeaders.forEach { columnCell ->
             parent.addView(
                 createOneColumnOfData(
                     parent,
                     columnCell,
-                    createColumnValues(columnCell, tableDataCells)
+                    createColumnValues(columnCell, tableCells)
                 )
             )
         }
