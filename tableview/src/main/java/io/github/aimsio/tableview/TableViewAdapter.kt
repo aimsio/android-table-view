@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 
-class TableViewManager<in T> constructor(
+class TableViewAdapter<in T> constructor(
     private val columnHeaders: List<ColumnCell>,
     private val dataRows: List<T>,
     private val rowFieldsToTableCellMapper: (t: T, columnName : ColumnCell) -> TableCell

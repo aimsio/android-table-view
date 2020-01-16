@@ -12,7 +12,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
 import io.github.aimsio.tableview.ColumnCell
 import io.github.aimsio.tableview.TableCell
-import io.github.aimsio.tableview.TableViewManager
+import io.github.aimsio.tableview.TableViewAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,9 +24,15 @@ class MainActivity : AppCompatActivity() {
         val rows = DataGenerator.rows(this)
         val columns = DataGenerator.columns().map { ColumnHeaderCell(it.title) }
 
-        TableViewManager(columns, rows) { person: Person, columnName: ColumnCell ->
-            mapPersonFieldsToTableCell(columnName = columnName.getColumnTitle(), person = person)
-        }.showTable(table_container)
+        val tableViewManager =
+            TableViewAdapter(columns, rows) { person: Person, columnName: ColumnCell ->
+                mapPersonFieldsToTableCell(
+                    columnName = columnName.getColumnTitle(),
+                    person = person
+                )
+            }
+
+        tableView.showTable(tableViewManager)
     }
 
     private fun mapPersonFieldsToTableCell(
