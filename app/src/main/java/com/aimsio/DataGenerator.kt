@@ -9,7 +9,7 @@ import java.io.InputStreamReader
 
 data class Person(
     @SerializedName("id")
-    val id: Int,
+    val id: String,
     @SerializedName("first_name")
     val firstName: String,
     @SerializedName("last_name")
@@ -28,9 +28,9 @@ data class Person(
     val avatar: String
 )
 
-enum class PersonColumns(name: String) {
+enum class PersonColumns(val uniqueName: String) {
 
-    ID("ID"),
+    ID("Id"),
     FIRST_NAME("First Name"),
     LAST_NAME("Last Name"),
     EMAIL("Email"),
@@ -41,18 +41,20 @@ enum class PersonColumns(name: String) {
     AVATAR("Avatar")
 }
 
+data class Column(val title: String, val uniqueName: String)
+
 class DataGenerator {
 
     companion object {
 
-        fun columns(): List<String> {
-            return PersonColumns.values().map { it.name }
+        fun columns(): List<Column> {
+            return PersonColumns.values().map { Column(it.uniqueName, it.name) }
         }
 
-        fun rows(context: Context): List<Person> {
+        fun rows(context: Context): ArrayList<Person> {
             return Gson().fromJson(
                 getMockDataJson(context),
-                object : TypeToken<List<Person>>() {}.type
+                object : TypeToken<ArrayList<Person>>() {}.type
             )
         }
 
