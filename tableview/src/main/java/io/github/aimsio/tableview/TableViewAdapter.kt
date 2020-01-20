@@ -9,58 +9,35 @@ import android.widget.LinearLayout
 class TableViewAdapter<in T> constructor(
     private val columnHeaders: List<ColumnCell>,
     private val dataRows: List<T>,
-    private val rowFieldsToTableCellMapper: (t: T, columnName : ColumnCell) -> TableCell
+    private val rowFieldsToTableCellMapper: (t: T, columnName: ColumnCell) -> TableCell
 ) {
 
     fun showTable(parent: ViewGroup) {
 
-        val tableCells = mutableListOf<List<TableCell>>()
+        columnHeaders.forEach { columnCell ->
+            val tableCells = mutableListOf<List<TableCell>>()
 
-        columnHeaders.forEach { columnTitleCell ->
             dataRows.forEach { row ->
                 val cells = mutableListOf<TableCell>()
-                cells.add(rowFieldsToTableCellMapper(row, columnTitleCell))
+                cells.add(rowFieldsToTableCellMapper(row, columnCell))
                 tableCells.add(cells)
             }
-        }
 
-        columnHeaders.forEach { columnCell ->
-            parent.addView(
-                createOneColumnOfData(
-                    parent,
-                    columnCell,
-                    createColumnValues(columnCell, tableCells)
-                )
-            )
+            val cells = tableCells.flatMap { cell -> cell.filter { it.getCellColumnTitle() == columnCell.getColumnTitle() } }
+
+            val columnView = createColumnView(parent, columnCell, cells)
+            parent.addView(columnView)
         }
     }
 
-    private fun createColumnValues(
-        column: ColumnCell,
-        rows: List<List<TableCell>>
-    ): List<TableCell> {
-
-        val values = mutableListOf<TableCell>()
-
-        rows.filter { row ->
-            values.addAll(row.filter { it.getCellColumnTitle() == column.getColumnTitle() })
-        }
-
-        return values
-    }
-
-    private fun createOneColumnOfData(
-        parent: ViewGroup,
-        column: ColumnCell,
-        columnValues: List<TableCell>
-    ): View {
+    private fun createColumnView(parent: ViewGroup, column: ColumnCell, cells: List<TableCell>): View {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.table_column, parent, false)
         val linearLayout = view.findViewById<LinearLayout>(R.id.column_linear)
 
         linearLayout.addView(createColumnHeaderCell(linearLayout, column))
 
-        columnValues.forEach { columnValue ->
+        cells.forEach { columnValue ->
             linearLayout.addView(createDataCell(linearLayout, columnValue))
         }
 

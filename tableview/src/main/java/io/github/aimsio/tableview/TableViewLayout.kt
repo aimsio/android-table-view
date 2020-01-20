@@ -18,8 +18,8 @@ class TableViewLayout @JvmOverloads constructor(context: Context, attributeSet: 
         tableContainerView = view.findViewById(R.id.table_container)
     }
 
-    fun showTable(tableViewManager: TableViewAdapter<*>) {
-        tableViewManager.showTable(tableContainerView)
+    fun setAdapter(tableViewAdapter: TableViewAdapter<*>) {
+        tableViewAdapter.showTable(tableContainerView)
     }
 
 }

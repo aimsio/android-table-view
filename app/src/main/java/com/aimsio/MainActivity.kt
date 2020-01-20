@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val rows = DataGenerator.rows(this)
         val columns = DataGenerator.columns().map { ColumnHeaderCell(it.title) }
 
-        val tableViewManager =
+        val tableViewAdapter =
             TableViewAdapter(columns, rows) { person: Person, columnName: ColumnCell ->
                 mapPersonFieldsToTableCell(
                     columnName = columnName.getColumnTitle(),
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
-        tableView.showTable(tableViewManager)
+        tableView.setAdapter(tableViewAdapter)
     }
 
     private fun mapPersonFieldsToTableCell(
