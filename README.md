@@ -31,6 +31,7 @@ different custom cell layouts of their own logic and desire.
 
 3. provide a mapping function that defines the view and the logic of data display in each column, using your model object.
 
+![](./art/code.png)
 
 ### License
 
