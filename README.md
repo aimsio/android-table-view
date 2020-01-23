@@ -1,3 +1,5 @@
+![](./art/demo.gif)
+
 [ ![Download](https://api.bintray.com/packages/farhad/maven/tableview/images/download.svg) ](https://bintray.com/farhad/maven/tableview/_latestVersion)
 
 ```groovy
@@ -11,6 +13,24 @@ implementation 'io.github.aimsio:tableview:[latest-version]'
 
 This library provides `TableViewLayout` and `TableViewAdapter` to help create a 2D table representation of any data on Android, enabling consumer classes to use
 different custom cell layouts of their own logic and desire.
+
+#### The benefits of our TableViewLayout
+
+1. fluent and easy to understand api.
+
+2. lightweight library size without any third party dependency.
+
+3. maximum flexibility in enabling the consumer to use different logic and views for each column.
+
+
+#### The integration process
+
+1. create a list of Strings, representing your column titles.
+
+2. create a list of your model objects. These are the objects you want to show in a tabular format.
+
+3. provide a mapping function that defines the view and the logic of data display in each column, using your model object.
+
 
 ### License
 
